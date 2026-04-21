@@ -16,7 +16,7 @@ export class AuditService {
         timeout: 10000
      });
      const $ = cheerio.load(data);
- 
+
      const title = $('title').text();
      const metaEl = $('meta[name="description"]');
      const metaDescription = metaEl.length ? metaEl.attr('content') || '' : '';

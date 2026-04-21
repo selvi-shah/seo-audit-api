@@ -16,7 +16,7 @@ export async function generateSeoInsights(data: any) {
     Return ONLY valid JSON:
     {
         "summary": string,
-        "recommendation": string[]
+        "recommendations": string[]
     }
     `;
 
