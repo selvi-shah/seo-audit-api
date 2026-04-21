@@ -36,6 +36,8 @@ export async function sendAuditReport (to: string, auditData: any) {
 }
 
 function buildEmailTemplate(data: any): string {
+      console.log("Building template with:", JSON.stringify(data, null, 2));
+
     const recommendations = data.recommendations || data.recommendation || [];
 
     return `

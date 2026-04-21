@@ -2,7 +2,6 @@ import type { Request, Response } from "express";
 import express from 'express';
 import { AuditService } from "../service/audit.service.ts";
 import { sendAuditReport } from "../service/email.service.ts";
-import { error } from "node:console";
 
 
 export class AuditController {
