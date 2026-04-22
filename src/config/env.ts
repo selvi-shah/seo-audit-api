@@ -9,6 +9,7 @@ export const config = {
   groqApiKey: process.env.GROQ_API_KEY,
   gmailUser: process.env.GMAIL_USER || '',
   gmailPass: process.env.GMAIL_APP_PASSWORD || '',
+  jwtSecret: process.env.JWT_SECRET || 'fallback_secret_key' as string,
   port: process.env.PORT || 3000,  // ← add this
 
 };

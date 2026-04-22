@@ -63,3 +63,55 @@ function buildEmailTemplate(data: any): string {
     </div>
   `;
 }
+
+export async function sendComparisonReport(to: string, comaprsion: any) {
+    try {
+        await transporter.sendMail({
+            from: `"SEO Audtior" <${process.env.GMAIL_USER}>`,
+            to,
+            subject: `SEO Competitor Analysis - ${comaprsion.urls.a} vs ${comaprsion.urls.b}`,
+            html: buildComparisonTemplate(comaprsion)
+        });
+        console.log("Comparison email sent");
+    } catch (error: any) {
+        console.error("Comparison email error:", error.message);
+    }
+}
+
+function buildComparisonTemplate(data: any): string {
+    const { urls, metrics, overall } = data;
+
+    return `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+      <h2 style="color: #2c3e50;">SEO Competitor Analysis</h2>
+      
+      <p><strong>${urls.a}</strong> vs <strong>${urls.b}</strong></p>
+
+      <h3>Metrics Comparison</h3>
+      <table style="width:100%; border-collapse: collapse; margin-top: 10px;">
+        <tr style="background: #f4f4f4;">
+          <th style="padding: 8px; text-align:left;">Metric</th>
+          <th style="padding: 8px; text-align:center;">${urls.a}</th>
+          <th style="padding: 8px; text-align:center;">${urls.b}</th>
+          <th style="padding: 8px; text-align:center;">Winner</th>
+        </tr>
+        ${metrics.map((m: any) => `
+          <tr style="border-bottom: 1px solid #eee;">
+            <td style="padding: 8px;">${m.label}</td>
+            <td style="padding: 8px; text-align:center;">${m.a}</td>
+            <td style="padding: 8px; text-align:center;">${m.b}</td>
+            <td style="padding: 8px; text-align:center;">
+              ${m.winner === 'a' ? urls.a : m.winner === 'b' ? urls.b : 'Tie'}
+            </td>
+          </tr>
+        `).join('')}
+      </table>
+
+      <h3>Overall Winner 🏆</h3>
+      <p style="font-size: 18px; color: #27ae60;">
+        <strong>${overall.winner}</strong>
+      </p>
+      <p>${urls.a}: ${overall.aWins} wins | ${urls.b}: ${overall.bWins} wins</p>
+    </div>
+  `;
+}

@@ -21,6 +21,16 @@ const createTables = async () => {
             )
             `)
             console.log("Tables created");
+
+            await dbpool.query(`
+                create table if not exists users (
+                id serial primary key,
+                email text unique not null,
+                password text not null,
+                created_at timestamp default now()
+                )
+                `);
+                console.log("User Table Created")
             process.exit(0);
     } catch (error: any) {
         console.error("Migration error:", error.message);
