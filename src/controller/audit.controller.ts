@@ -41,9 +41,9 @@ export class AuditController {
         }
 
         res.json({...result, emailSent: !!email});
-        } catch (error) {
+        } catch (error: any) {
         console.error(error)
-        res.status(500).json({error: "Audit failed"})
+        res.status(500).json({error: error.message || "Audit failed"})
         }
     }
 

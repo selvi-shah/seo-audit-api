@@ -5,7 +5,22 @@ import { AuditController } from "./controller/audit.controller.ts";
 import { AuthController } from './controller/auth.controller.ts';
 import { authMiddleware } from './middleware/auth.middleware.ts';
 
+import cors from 'cors';
+
 const app = express();
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || /^http:\/\/localhost(:\d+)?$/.test(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+}));
+
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
